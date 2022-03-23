@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class GradientBack extends StatelessWidget {
   final String title;
-  const GradientBack(this.title, {Key? key}) : super(key: key);
+  final double height;
+  const GradientBack(this.title, this.height, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: height,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset(0.2, 0.0),
@@ -14,8 +15,8 @@ class GradientBack extends StatelessWidget {
           stops: [0.0, 0.6],
           tileMode: TileMode.clamp,
           colors: [
-            Color(0xFFF58524),
-            Color(0xFFF92B7F),
+            Color.fromARGB(255, 88, 118, 218),
+            Color.fromARGB(255, 80, 100, 190),
           ],
         ),
       ),

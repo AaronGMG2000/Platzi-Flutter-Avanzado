@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:platzi_trips_app/User/model/user.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Profile extends StatelessWidget {
-  final String name;
-  final String email;
-  final String pathImage;
-const Profile(this.name, this.email, this.pathImage ,{ Key? key }) : super(key: key);
+  final User user;
+  const Profile({required this.user, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     final profileImage = Container(
         width: 80,
         height: 80,
@@ -16,14 +15,15 @@ const Profile(this.name, this.email, this.pathImage ,{ Key? key }) : super(key: 
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white, width: 2.0),
             image: DecorationImage(
-              image: AssetImage(pathImage),
+              image: NetworkImage(user.pathImage),
               fit: BoxFit.cover,
             )));
 
     final profileName = Container(
+      width: 250,
       margin: const EdgeInsets.only(left: 20),
-      child: Text(
-        name,
+      child: AutoSizeText(
+        user.name,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontFamily: 'Lato',
@@ -31,38 +31,37 @@ const Profile(this.name, this.email, this.pathImage ,{ Key? key }) : super(key: 
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
+        maxLines: 2,
       ),
     );
 
-
     final profileEmail = Container(
+      width: 250,
       margin: const EdgeInsets.only(left: 20),
-      child: Text(
-        email,
+      child: AutoSizeText(
+        user.email,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontFamily: 'Lato',
           color: Colors.white38,
-          fontSize: 16,
+          fontSize: 12,
         ),
+        maxLines: 2,
       ),
     );
 
     final profileDetails = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        profileName,
-        profileEmail
-      ],
+      children: <Widget>[profileName, profileEmail],
     );
 
     return Container(
-      margin: const EdgeInsets.only(top: 20.0, left: 35),
+      margin: const EdgeInsets.only(
+        top: 20.0,
+        left: 35,
+      ),
       child: Row(
-        children: <Widget>[
-          profileImage,
-          profileDetails
-        ],
+        children: <Widget>[profileImage, profileDetails],
       ),
     );
   }

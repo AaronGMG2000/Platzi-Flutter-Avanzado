@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ProfielGradient2 extends StatelessWidget {
@@ -9,7 +8,7 @@ class ProfielGradient2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: size,
-      decoration:  const BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.elliptical(1000, 1000),
         ),

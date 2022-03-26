@@ -26,7 +26,8 @@ class FirebaseAuthAPI {
   }
 
   Future<void> singOut() async {
-    await _auth.signOut().then((value) => {});
-    googleSignIn.signOut();
+    await _auth.signOut().then((value) {
+      googleSignIn.signOut();
+    });
   }
 }

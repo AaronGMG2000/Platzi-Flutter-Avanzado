@@ -16,7 +16,10 @@ class _PlatziTripsState extends State<PlatziTrips> {
   int indexTap = 0;
 
   final List<Widget> widgetsChildren = [
-    const HomeTrip(),
+    BlocProvider<UserBloc>(
+      child: const HomeTrip(),
+      bloc: UserBloc(),
+    ),
     const SearchTrips(),
     BlocProvider<UserBloc>(
       child: const ProfileTrip(),

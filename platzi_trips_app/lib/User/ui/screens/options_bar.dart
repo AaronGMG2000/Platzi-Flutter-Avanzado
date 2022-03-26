@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:platzi_trips_app/Place/ui/screens/add_place_screen.dart';
 import 'package:platzi_trips_app/User/bloc/bloc_user.dart';
 import 'package:platzi_trips_app/widgets/circle_button.dart';
 
@@ -21,7 +25,21 @@ class OptionsBar extends StatelessWidget {
             iconData: Icons.vpn_key,
           ),
           CircleButton(
-            onPressed: () {},
+            onPressed: () {
+              ImagePicker picker = ImagePicker();
+              picker.pickImage(source: ImageSource.camera).then(
+                (image) async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddPlaceScreen(
+                        image: File(image?.path ?? ""),
+                      ),
+                    ),
+                  );
+                },
+              ).catchError((onError) {});
+            },
             size: 60,
             iconSize: 50,
             iconData: Icons.add,

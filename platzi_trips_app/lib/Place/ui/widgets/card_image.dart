@@ -1,23 +1,45 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/widgets/floating_action_button_green.dart';
 
 class CardImage extends StatelessWidget {
   final String pathImage;
-  const CardImage(this.pathImage, {Key? key}) : super(key: key);
+  final double height;
+  final double width;
+  final double left;
+  final VoidCallback onPressedFab;
+  final IconData iconData;
+  final bool internet;
+  final double top;
+  const CardImage({
+    required this.pathImage,
+    required this.onPressedFab,
+    this.height = 350,
+    this.width = 300,
+    this.left = 20,
+    this.top = 80,
+    this.iconData = Icons.favorite_border,
+    this.internet = false,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final card = Container(
-      height: 350,
-      width: 250,
-      margin: const EdgeInsets.only(
-        top: 80,
-        left: 20,
+      height: height,
+      width: width,
+      margin: EdgeInsets.only(
+        top: top,
+        left: left,
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(pathImage),
+          image: !internet
+              ? pathImage == ''
+                  ? const AssetImage("assets/images/noImage.jpg")
+                  : AssetImage(pathImage)
+              : CachedNetworkImageProvider(pathImage) as ImageProvider,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         shape: BoxShape.rectangle,
@@ -34,7 +56,13 @@ class CardImage extends StatelessWidget {
       children: <Widget>[
         Stack(
           alignment: const Alignment(0.9, 1.1),
-          children: <Widget>[card, const FloatingActionButtonGreen()],
+          children: <Widget>[
+            card,
+            FloatingActionButtonGreen(
+              iconData: iconData,
+              onPressed: onPressedFab,
+            )
+          ],
         )
       ],
     );

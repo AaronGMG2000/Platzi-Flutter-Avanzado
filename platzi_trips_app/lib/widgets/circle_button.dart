@@ -27,29 +27,30 @@ class _CircleButtonState extends State<CircleButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: widget.onPressed,
-        child: Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            color: widget.backColor,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: widget.shadowColor,
-                blurRadius: 2,
-                spreadRadius: 2,
-                offset: const Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Icon(
-              widget.iconData,
-              color: widget.colorData,
-              size: widget.iconSize,
+      onTap: widget.onPressed,
+      child: Container(
+        width: widget.size,
+        height: widget.size,
+        decoration: BoxDecoration(
+          color: widget.backColor,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: widget.shadowColor,
+              blurRadius: 2,
+              spreadRadius: 2,
+              offset: const Offset(0, 1),
             ),
+          ],
+        ),
+        child: Center(
+          child: Icon(
+            widget.iconData,
+            color: widget.colorData,
+            size: widget.iconSize,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

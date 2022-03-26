@@ -6,16 +6,19 @@ class Place {
   final String name;
   final String description;
   final String urlImage;
-  final int likes;
-  final User userOwner;
-
+  late int likes;
+  final User? userOwner;
+  late bool liked;
+  late bool internet;
   Place({
     Key? key,
     this.id = "",
     required this.name,
     required this.description,
     required this.urlImage,
-    required this.userOwner,
     this.likes = 0,
+    this.liked = false,
+    this.userOwner,
+    this.internet = false,
   });
 }

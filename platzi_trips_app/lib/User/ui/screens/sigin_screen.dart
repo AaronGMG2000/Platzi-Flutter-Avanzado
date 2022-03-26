@@ -24,26 +24,33 @@ class _SiginScreenState extends State<SiginScreen> {
   }
 
   Widget sigInGoogleUI(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          GradientBack("", MediaQuery.of(context).size.height),
+          const GradientBack(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                "Welcome \n this is your Travel App",
-                style: TextStyle(
-                  fontSize: 37.0,
-                  fontFamily: "Lato",
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              Flexible(
+                child: SizedBox(
+                  width: screenWidth,
+                  child: const Text(
+                    "Welcome \n this is your Travel App",
+                    style: TextStyle(
+                      fontSize: 37.0,
+                      fontFamily: "Lato",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               ButtonGreem(
                 text: "Sign in with Google",
                 onPressed: () {
+                  userBloc.signOut();
                   userBloc.signIn().then((UserCredential user) {
                     userBloc.updateUserData(model.User(
                       uid: user.user?.uid ?? "",

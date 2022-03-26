@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/widgets/floating_action_button_green.dart';
 
@@ -6,9 +8,15 @@ class ImageProfile extends StatelessWidget {
   final String name;
   final String description;
   final String calification;
-  const ImageProfile(this.url, this.name, this.description, this.calification,
-      {Key? key})
-      : super(key: key);
+  final VoidCallback onPressedFav;
+  const ImageProfile({
+    Key? key,
+    required this.url,
+    required this.name,
+    required this.description,
+    required this.calification,
+    required this.onPressedFav,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,11 @@ class ImageProfile extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage(url),
+          image: url.contains('assets')
+              ? AssetImage(url)
+              : url == ''
+                  ? const AssetImage("assets/images/noImage.jpg")
+                  : NetworkImage(url) as ImageProvider,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         shape: BoxShape.rectangle,
@@ -41,23 +53,35 @@ class ImageProfile extends StatelessWidget {
       textAlign: TextAlign.left,
     );
 
-    final descriptionPublication = Text(
-      description,
-      style: const TextStyle(fontSize: 14, color: Colors.black54),
-      textAlign: TextAlign.left,
-    );
+    final descriptionPublication = Container(
+        height: 60,
+        margin: const EdgeInsets.only(top: 30),
+        child: ListView(
+          children: [
+            Text(
+              description,
+              style: const TextStyle(
+                  color: Color.fromRGBO(0, 0, 0, 0.4),
+                  fontFamily: 'Lato',
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ));
 
-    final calificationPublication = Text(
-      "Calificación: $calification",
-      style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.greenAccent[700]),
-      textAlign: TextAlign.left,
-    );
+    final calificationPublication = Container(
+        margin: const EdgeInsets.only(top: 100),
+        child: Text(
+          "Likes: $calification",
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.greenAccent[700]),
+          textAlign: TextAlign.left,
+        ));
 
     final publication = Container(
-      height: 115,
+      height: 150,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(top: 10),
       decoration: const BoxDecoration(
@@ -72,20 +96,17 @@ class ImageProfile extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
         children: <Widget>[
           namePublication,
           descriptionPublication,
           calificationPublication
-          
         ],
       ),
     );
 
     final publicationContainer = SizedBox(
-      height: 140,
+      height: 180,
       width: 300,
       child: Stack(
         children: <Widget>[
@@ -95,8 +116,11 @@ class ImageProfile extends StatelessWidget {
             left: 0,
             right: 0,
           ),
-          const Positioned(
-            child: FloatingActionButtonGreen(),
+          Positioned(
+            child: FloatingActionButtonGreen(
+              iconData: Icons.favorite_border,
+              onPressed: onPressedFav,
+            ),
             right: 10,
           )
         ],
@@ -105,14 +129,14 @@ class ImageProfile extends StatelessWidget {
     );
 
     return Container(
-      height: 340,
+      height: 350,
       padding: const EdgeInsets.all(10),
       child: Stack(
         children: <Widget>[
           image,
           Positioned(
             child: publicationContainer,
-            top: 175,
+            top: 150,
           )
         ],
         alignment: Alignment.topCenter,

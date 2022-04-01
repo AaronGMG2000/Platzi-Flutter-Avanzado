@@ -39,6 +39,7 @@ class CloudfirestoreAPI {
         'urlImage': place.urlImage,
         'likes': place.likes,
         'userOwner': firestore.doc("users/${user?.uid}"),
+        'usersLiked': [],
       },
     ).then((dr) {
       dr.get().then((snapshot) {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:platzi_trips_app/widgets/floating_action_button_green.dart';
@@ -38,8 +40,10 @@ class CardImage extends StatelessWidget {
           image: !internet
               ? pathImage == ''
                   ? const AssetImage("assets/images/noImage.jpg")
-                  : AssetImage(pathImage)
-              : CachedNetworkImageProvider(pathImage) as ImageProvider,
+                  : pathImage.contains("assets")
+                      ? AssetImage(pathImage)
+                      : FileImage(File(pathImage)) as ImageProvider
+              : CachedNetworkImageProvider(pathImage),
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         shape: BoxShape.rectangle,
